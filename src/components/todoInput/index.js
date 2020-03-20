@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import moment from 'moment';
+import { connect } from 'react-redux';
+import { Input } from 'antd';
+import { create } from '../../actions/action';
 
 class TodoInput extends Component {
     constructor(props) {
@@ -15,35 +17,26 @@ class TodoInput extends Component {
         this.setState({ input: event.currentTarget.value })
     }
 
-    handleWriteHistory = (input, status) => {
-        const { actionWrite } = this.props;
-        const dateTime = moment().format('DD/MM/YYYY HH:mm:ss');
-        const historyObj = {
-            text: input,
-            status: status,
-            dateTime: dateTime
-        };
-        actionWrite(historyObj);
-    }
-
     handleCreate = () => {
-        const { actionCreate } = this.props;
+        const { create, actionWrite } = this.props;
         const { input } = this.state;
-        const status = 'Add';
-        actionCreate(input);
-        this.handleWriteHistory(input, status);
-        this.setState({ input: '' });
+        if (input.trim()) {
+            create(input);
+            actionWrite(input, 'Add');
+            this.setState({ input: '' });
+        }
     }
 
     render() {
         const { input } = this.state;
         return (
-            <div>
-                <input value={input} onChange={this.handleChange} />
-                <button onClick={() => this.handleCreate(input)}>Add Todo</button>
-            </div>
+            <Input addonBefore={'Todo'} placeholder={'press enter to add todo'} size={'large'} value={input} onChange={this.handleChange} onPressEnter={() => this.handleCreate(input)} />
         )
     }
 }
 
-export default TodoInput;
+const mapDispatchToProps = dispatch => ({
+    create: (text) => dispatch(create(text)),
+})
+
+export default connect(null, mapDispatchToProps)(TodoInput);
