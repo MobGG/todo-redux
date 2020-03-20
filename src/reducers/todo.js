@@ -1,37 +1,30 @@
+import { CREATE_TODO, REMOVE_TODO, DELETE_TODO } from '../actions/actionType';
+
 const initialState = [];
-const mockState = [
-    {
-        id: 1,
-        text: 'action.text1',
-        removed: false
-    },
-    {
-        id: 2,
-        text: 'action.text2',
-        removed: true
-    },
-    {
-        id: 3,
-        text: 'action.text3',
-        removed: false
-    },
-]
 
 export const todoReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'CREATE':
+        case CREATE_TODO: {
+            const { id, text } = action.payload;
             return [
                 ...state,
                 {
-                    id: action.id,
-                    text: action.text,
+                    id,
+                    text,
                     removed: false
                 }
             ];
-        case 'REMOVE':
+        }
+        case REMOVE_TODO: {
+            const { id } = action.payload;
             return state.map(todo =>
-                todo.id === action.id ? { ...todo, removed: true } : todo
-            )
+                todo.id === id ? { ...todo, removed: true } : todo
+            );
+        }
+        case DELETE_TODO: {
+            const { id } = action.payload;
+            return state.filter(todo => todo.id !== id);
+        }
         default:
             return state;
     }
