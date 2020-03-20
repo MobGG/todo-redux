@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TodoInput from '../components/todoInput';
 import TodoList from '../components/todoList';
-import { create, remove, search } from '../actions/action';
+import { create, remove, search, writeHistory } from '../actions/action';
 
 class Home extends Component {
     constructor(props) {
@@ -11,13 +11,13 @@ class Home extends Component {
     }
 
     render() {
-        const { todos, create, search, remove } = this.props;
+        const { todos, create, search, remove, writeHistory } = this.props;
         return (
             <Fragment>
-                <h1>home</h1>
+                <h1 className="App">home</h1>
                 <Link to={'/history'}>history</Link>
-                <TodoInput actionCreate={create} />
-                <input onChange={(event) => search(event.currentTarget.value)} />
+                <input placeholder={'search'} onChange={(event) => search(event.currentTarget.value)} />
+                <TodoInput actionCreate={create} actionWrite={writeHistory} />
                 <TodoList todoArray={todos} actionRemove={remove} />
             </Fragment>
         );
@@ -41,7 +41,8 @@ const mapDispatchToProps = dispatch => ({
     // must import action
     create: (text) => dispatch(create(text)),
     search: (text) => dispatch(search(text)),
-    remove: (id) => dispatch(remove(id))
+    remove: (id) => dispatch(remove(id)),
+    writeHistory: (text, removed) => dispatch(writeHistory(text, removed))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

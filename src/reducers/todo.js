@@ -1,7 +1,4 @@
-// const initialState = {
-//     todoArray: [],
-//     filterArray: [],
-// };
+const initialState = [];
 const mockState = [
     {
         id: 1,
@@ -20,7 +17,7 @@ const mockState = [
     },
 ]
 
-export const todoReducer = (state = mockState, action) => {
+export const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'CREATE':
             return [

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class TodoInput extends Component {
     constructor(props) {
@@ -6,7 +7,6 @@ class TodoInput extends Component {
         this.state = {
             input: '',
         };
-
     }
 
     handleChange = (event) => {
@@ -15,10 +15,23 @@ class TodoInput extends Component {
         this.setState({ input: event.currentTarget.value })
     }
 
+    handleWriteHistory = (input, status) => {
+        const { actionWrite } = this.props;
+        const dateTime = moment().format('DD/MM/YYYY HH:mm:ss');
+        const historyObj = {
+            text: input,
+            status: status,
+            dateTime: dateTime
+        };
+        actionWrite(historyObj);
+    }
+
     handleCreate = () => {
-        const { input } = this.state;
         const { actionCreate } = this.props;
+        const { input } = this.state;
+        const status = 'Add';
         actionCreate(input);
+        this.handleWriteHistory(input, status);
         this.setState({ input: '' });
     }
 
