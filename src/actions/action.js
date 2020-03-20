@@ -1,4 +1,5 @@
 let nextTodoId = 1;
+let nextHistoryId = 1;
 
 export const create = (text) => ({
     type: 'CREATE',
@@ -16,10 +17,12 @@ export const search = (text) => ({
     text
 });
 
-export const writeHistory = (text, removed) => ({
+export const writeHistory = (obj) => ({
     type: 'WRITE_HISTORY',
-    text,
-    removed
+    id: nextHistoryId++,
+    dateTime: obj.dateTime,
+    text: obj.text,
+    status: obj.status,
 });
 
 export const clearAllHistory = () => ({
@@ -30,9 +33,3 @@ export const sort = (text) => ({
     type: 'SORT',
     text
 });
-
-// export const VisibilityFilters = {
-//     SHOW_ALL: 'SHOW_ALL',
-//     SHOW_COMPLETED: 'SHOW_COMPLETED',
-//     SHOW_ACTIVE: 'SHOW_ACTIVE'
-// };
