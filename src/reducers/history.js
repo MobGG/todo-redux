@@ -17,7 +17,7 @@ export const historyReducer = (state = initialState, action) => {
             ];
         }
         case CLEAR_ALL_HISTORY: {
-            return [];
+            return initialState;
         }
         default:
             return state;

@@ -32,7 +32,8 @@ export const writeHistory = (obj) => ({
 });
 
 export const clearAllHistory = () => ({
-    type: CLEAR_ALL_HISTORY
+    type: CLEAR_ALL_HISTORY,
+    payload: {}
 });
 
 export const sort = (text) => ({
