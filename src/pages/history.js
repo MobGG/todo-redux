@@ -12,7 +12,7 @@ class History extends Component {
     }
 
     render() {
-        const { historyArray } = this.props;
+        const { historyArray, clearAllHistory } = this.props;
         return (
             <Fragment>
                 <h1>history</h1>
